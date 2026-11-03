@@ -1,0 +1,182 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<script>window.STATIC_SITE = true; document.documentElement.classList.add('static-site');</script>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>미사지구 부동산 대시보드 | 센트럴자이 미사금호부동산</title>
+<link rel="icon" href="logo.svg" type="image/svg+xml">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css">
+<link rel="stylesheet" href="vendor/leaflet.min.css">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header class="brand">
+  <div class="brand-in">
+    <img class="logo" src="logo.svg" alt="KH 로고" width="66" height="57">
+    <div class="brand-name">
+      <div class="brand-title">센트럴자이 미사금호부동산</div>
+      <div class="brand-sub">하남시 미사지구 부동산 대시보드</div>
+    </div>
+    <a class="brand-tel" href="tel:0317951149"><span>Tel.</span> 031-795-1149</a>
+  </div>
+</header>
+
+<section class="filters" aria-label="조회 조건">
+  <div class="filters-in">
+    <div class="field">
+      <span class="field-label">지역</span>
+      <div class="seg" id="dongSeg"></div>
+    </div>
+    <div class="field">
+      <span class="field-label">주기</span>
+      <div class="seg" id="cycleSeg">
+        <button data-v="week" class="on">주간</button>
+        <button data-v="month">월간</button>
+        <button data-v="quarter">3개월</button>
+        <button data-v="custom">직접지정</button>
+      </div>
+    </div>
+    <div class="field">
+      <span class="field-label">기간</span>
+      <div class="dates">
+        <input type="date" id="from" aria-label="시작일"><span>~</span><input type="date" id="to" aria-label="종료일">
+      </div>
+    </div>
+    <div class="field" id="presetField">
+      <span class="field-label">빠른 선택</span>
+      <div class="chips" id="presets"></div>
+    </div>
+    <div class="report-actions">
+      <button class="ghost" id="printReport">인쇄</button>
+      <button class="primary" id="savePdf">PDF 저장</button>
+    </div>
+  </div>
+</section>
+
+<main>
+  <div id="banner" class="banner" hidden></div>
+  <p class="site-note" id="siteNote" hidden></p>
+  <p class="report-summary" id="reportSummary"></p>
+
+  <section class="kpis" id="kpis" aria-label="핵심 지표"></section>
+  <p class="lag-note">실거래는 계약 후 30일 안에 신고되므로 최근 기간의 건수는 앞으로 늘어날 수 있습니다.</p>
+
+  <section class="top-grid">
+    <div class="panel">
+      <div class="panel-head">
+        <h2>미사지구 아파트 Top 10</h2>
+        <div class="tabs" id="dealTabs" role="tablist">
+          <button data-v="매매" class="on">매매</button>
+          <button data-v="전세">전세</button>
+          <button data-v="월세">월세</button>
+        </div>
+      </div>
+      <div class="metric-row"><span>순위 기준</span><div class="chips" id="metricChips"></div></div>
+      <ol class="rank" id="rankList"></ol>
+      <p class="foot" id="rankFoot"></p>
+    </div>
+
+    <div class="panel map-panel">
+      <div class="panel-head">
+        <h2 id="mapTitle">Top 10 위치</h2>
+        <button class="ghost no-print" id="resetMap" hidden>Top 10 전체 보기</button>
+      </div>
+      <div id="map"></div>
+      <div id="detail" class="detail" hidden></div>
+    </div>
+  </section>
+
+  <section id="location" class="location" hidden></section>
+
+  <section class="panel listings-panel">
+    <div class="panel-head">
+      <h2>추천 매물</h2>
+      <button class="primary no-print" id="addListing">+ 매물 추가</button>
+    </div>
+    <div class="listings" id="listings"></div>
+  </section>
+
+  <section class="market">
+    <h2 class="section-title">시장 지표</h2>
+    <div class="yoy-cards" id="yoyCards"></div>
+    <div class="charts" id="charts"></div>
+
+    <h2 class="section-title">동별 거래 현황</h2>
+    <div class="panel dong-panel">
+      <div class="table-scroll"><table class="dong-table" id="dongTable"></table></div>
+      <p class="foot" id="dongFoot"></p>
+      <div class="dong-charts">
+        <div class="chart flat"><h3>동별 거래량 비교</h3><div class="chart-sub">조회 기간 합계</div><div class="chart-box" id="box-dongBar"></div></div>
+        <div class="chart flat"><h3 id="t-dongTrend"></h3><div class="chart-sub">동별 매매 신고 건수 추이</div><div class="chart-box" id="box-dongTrend"></div></div>
+      </div>
+    </div>
+
+    <h2 class="section-title">외지인 수요 분석 <small>2017년 ~ 최신 공표월</small></h2>
+    <div id="outlookError" class="banner" hidden></div>
+    <p class="notice"><b>확인해 주세요.</b> 매수자 거주지는 단지별·미사지구별로 공개되지 않습니다. 아래 수치는 <b>하남시 전체</b> 기준이며, 외지인은 하남시 밖 거주자입니다. 하남시 안의 다른 동에 사는 매수자는 외지인에 포함되지 않습니다.</p>
+    <div class="kpis outsider-tiles" id="outsiderTiles"></div>
+    <div class="outlook-charts">
+      <div class="chart wide"><h3>연도별 매수자 거주지 구성</h3><div class="chart-sub">한국부동산원 · 하남시 아파트 매매 건수 기준 100%</div><div class="chart-box tall" id="box-buyerMix"></div></div>
+      <div class="chart"><h3>외지인 비율 추이</h3><div class="chart-sub">월별 최근 12개월 합계 기준</div><div class="chart-box tall" id="box-outsiderTrend"></div></div>
+      <div class="chart"><h3>건축연도별 미사지구 단지 수</h3><div class="chart-sub">실거래 자료의 건축연도, 세대수 미반영</div><div class="chart-box tall" id="box-moveIn"></div></div>
+    </div>
+    <div class="panel cohort-panel">
+      <h3 class="panel-sub">단지별 입주 시기와 그 해 외지인 비율</h3>
+      <div class="table-scroll"><table class="dong-table cohort-table" id="cohortTable"></table></div>
+      <p class="foot">단지별 매수자 비율이 아니라, 단지가 지어진 해의 하남시 전체 비율을 나란히 놓은 참고 자료입니다. 건축연도는 실제 입주일과 다를 수 있습니다.</p>
+    </div>
+
+    <h2 class="section-title">향후 5년 공급 · 수요 시나리오 <small>2027 ~ 2031년</small></h2>
+    <p class="notice"><b>예측치가 아닙니다.</b> 공개된 계획을 정리한 가정별 시나리오이며, 일정은 바뀔 수 있습니다. 투자 판단의 근거로 단독 사용하지 마세요.</p>
+    <div class="panel">
+      <div class="chart flat"><h3>하남시 입주 물량과 적정 수요</h3><div class="chart-sub">막대가 점선 위로 올라가는 해는 공급 과잉 가능성이 있는 구간입니다</div><div class="chart-box tall" id="box-supplyDemand"></div></div>
+      <div class="table-scroll supply-scroll"><table class="dong-table" id="supplyTable"></table></div>
+    </div>
+    <div class="phases" id="phases"></div>
+    <ul class="outlook-notes" id="outlookNotes"></ul>
+  </section>
+</main>
+
+<footer class="footer">
+  <div class="footer-in">
+    <div>
+      <strong>센트럴자이 미사금호부동산</strong> · Tel. 031-795-1149<br>
+      경기 하남시 미사강변대로 95-2 센트럴자이상가 104호
+    </div>
+    <div class="sources">
+      자료: 국토교통부 실거래가 공개시스템(공공데이터포털), 한국부동산원 R-ONE, OpenStreetMap 기여자.<br>
+      본 자료는 상담 참고용이며 실제 거래가와 일정은 다를 수 있습니다. 해제 신고된 매매는 제외했습니다.
+    </div>
+  </div>
+</footer>
+
+<dialog id="listingDialog">
+  <form id="listingForm" method="dialog">
+    <h3 id="dialogTitle">매물 추가</h3>
+    <label class="wide">단지<select name="complexId" required></select></label>
+    <label class="wide">제목<input name="title" maxlength="40" placeholder="예: 로열층 남향, 즉시 입주 가능" required></label>
+    <label>거래유형<select name="dealType"><option>매매</option><option>전세</option><option>월세</option></select></label>
+    <label>전용면적(㎡)<input name="area" type="number" step="0.01" min="0" required></label>
+    <label data-for="매매">매매가(만원)<input name="price" type="number" min="0"></label>
+    <label data-for="전세,월세">보증금(만원)<input name="deposit" type="number" min="0"></label>
+    <label data-for="월세">월세(만원)<input name="rent" type="number" min="0"></label>
+    <label>층<input name="floor" maxlength="12" placeholder="예: 15/29층"></label>
+    <label class="wide">메모<textarea name="memo" rows="3" maxlength="200"></textarea></label>
+    <p class="form-error" id="formError" hidden></p>
+    <div class="dialog-actions">
+      <button type="button" class="ghost" id="cancelListing">취소</button>
+      <button type="submit" class="primary">저장</button>
+    </div>
+  </form>
+</dialog>
+
+<script src="vendor/leaflet.min.js"></script>
+<script src="vendor/chart.umd.js"></script>
+<script src="vendor/html2canvas.min.js"></script>
+<script src="vendor/jspdf.umd.min.js"></script>
+<script src="outlook.js"></script>
+<script src="report.js"></script>
+<script src="app.js"></script>
+</body>
+</html>

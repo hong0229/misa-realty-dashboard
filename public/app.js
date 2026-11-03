@@ -57,7 +57,33 @@ const pyArea = (a) => Math.round(a / PY);
 const rentLabel = (r) => (isJeonse(r) ? won(r.deposit) : `${won(r.deposit)} / ${r.rent}`);
 
 // ---- 데이터 ----
+// GitHub Pages에서는 서버가 없으므로 미리 만들어 둔 파일에서 같은 형태로 돌려준다
+const staticCache = new Map();
+function staticFile(name) {
+  if (!staticCache.has(name)) {
+    staticCache.set(name, fetch(`data/${name}.json`).then((res) => {
+      if (!res.ok) throw new Error(`자료를 불러오지 못했습니다 (${res.status})`);
+      return res.json();
+    }));
+  }
+  return staticCache.get(name);
+}
+async function staticApi(path) {
+  const url = new URL(path, location.href);
+  const q = url.searchParams;
+  const route = url.pathname.split('/').pop();
+  if (route === 'transactions') {
+    const all = await staticFile('transactions');
+    const inRange = (r) => r.d >= q.get('from') && r.d <= q.get('to');
+    return { trade: all.trade.filter(inRange), rent: all.rent.filter(inRange) };
+  }
+  if (route === 'market') return staticFile(q.get('cycle') === 'week' ? 'market_week' : 'market_month');
+  if (route === 'location') return (await staticFile('location'))[`${q.get('lat')},${q.get('lon')}`];
+  return staticFile(route);
+}
+
 async function api(path, opt) {
+  if (window.STATIC_SITE) return staticApi(path);
   const res = await fetch(path, opt);
   const body = await res.json().catch(() => ({}));
   if (!res.ok) throw new Error(body.error || `서버 오류 (${res.status})`);
@@ -852,6 +878,13 @@ function bindEvents() {
 async function init() {
   initMap();
   bindEvents();
+  if (window.STATIC_SITE) {
+    const site = await staticFile('site');
+    $('#from').min = site.from;
+    $('#to').min = site.from;
+    $('#siteNote').hidden = false;
+    $('#siteNote').textContent = `공개용 화면입니다. 자료 기준일 ${site.builtAt}, 실거래는 ${site.from.slice(0, 4)}년 1월부터 제공합니다. 최근 자료는 다시 게시해야 갱신됩니다.`;
+  }
   applyPreset(defaultPreset[state.cycle]);
   try {
     [meta, listings] = await Promise.all([api('/api/meta'), api('/api/listings')]);

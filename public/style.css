@@ -60,6 +60,8 @@ ol, ul { list-style: none; }
 .report-actions { display: flex; gap: 6px; margin-left: auto; }
 .report-actions button { white-space: nowrap; }
 .report-actions button:disabled { opacity: .6; cursor: wait; }
+.site-note { background: var(--gold-soft); border-radius: 8px; padding: 7px 12px; font-size: 13px; margin-bottom: 8px; }
+.static-site #addListing, .static-site .card-actions { display: none; }
 .report-summary { font-size: 13px; color: var(--ink-2); margin-bottom: 10px; }
 
 main { max-width: 1480px; margin: 0 auto; padding: 18px 24px 30px; }

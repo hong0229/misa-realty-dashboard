@@ -2,6 +2,13 @@
 
 센트럴자이 미사금호부동산 브리핑용 대시보드입니다.
 
+**공개 웹사이트:** https://hong0229.github.io/misa-realty-dashboard/
+
+## 웹사이트 갱신
+
+공개 사이트는 서버 없이 `docs/` 폴더의 파일로 동작합니다. API 키는 브라우저나 저장소에 올라가지 않습니다.
+자료를 새로 반영하려면 이 PC에서 `node scripts/build-pages.js`를 실행한 뒤 커밋하고 올립니다. 공개 사이트에서는 매물을 수정할 수 없고, `data/listings.json`이나 PC 화면에서 수정한 뒤 다시 게시합니다.
+
 ## 처음 설치 (저장소에서 받은 경우)
 
 1. [Node.js](https://nodejs.org) 22 이상을 설치합니다.

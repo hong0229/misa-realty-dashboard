@@ -18,6 +18,7 @@ function printReport() {
 function pdfTargets() {
   const list = [
     document.querySelector('.brand'),
+    $('#siteNote'),
     $('#reportSummary'),
     $('#kpis'),
     document.querySelector('.top-grid'),
