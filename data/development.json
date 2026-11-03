@@ -1,0 +1,62 @@
+{
+  "asOf": "2026-11-03",
+  "note": "언론 보도와 공개 자료를 정리한 내용으로, 일정과 노선은 변경될 수 있습니다. 공약·건의 단계는 확정된 사업이 아닙니다.",
+  "items": [
+    {
+      "name": "지하철 9호선 연장 (강동하남남양주선)",
+      "status": "추진 중",
+      "statusLevel": "progress",
+      "desc": "강동~하남~남양주 진접2지구 약 17.59km, 정거장 8곳. 강일지구와 미사강변도시를 경유합니다. 2024년 12월 기본계획 승인, 경기도 계획상 2031년 개통 목표입니다.",
+      "caution": "착공 시점은 지연 전망도 있어 최신 일정 확인이 필요합니다.",
+      "source": "https://www.engdaily.com/news/articleView.html?idxno=18761"
+    },
+    {
+      "name": "지하철 3호선 연장 (송파하남선)",
+      "status": "추진 중",
+      "statusLevel": "progress",
+      "desc": "오금역에서 하남 교산신도시까지 잇는 노선입니다. 2032년 개통이 목표로 제시되어 있습니다.",
+      "caution": "미사지구 직접 경유 노선은 아닙니다.",
+      "source": "https://www.hankyung.com/article/202605147039h"
+    },
+    {
+      "name": "하남 교산 3기 신도시",
+      "status": "추진 중",
+      "statusLevel": "progress",
+      "desc": "주택 약 3만 6,697호 공급 계획입니다. 블록별 순차 착공·분양이 진행되며 2029년부터 입주가 시작될 전망입니다.",
+      "caution": "대규모 입주 시기에는 전월세 공급 증가 요인이 될 수 있습니다.",
+      "source": "http://m.hanamilbo.net/news/articleView.html?idxno=11888"
+    },
+    {
+      "name": "위례신사선 하남 연장",
+      "status": "추진 요청",
+      "statusLevel": "proposed",
+      "desc": "하남시가 제5차 광역교통시행계획 반영을 요청하고 있습니다(2026년 8월 보도).",
+      "caution": "노선과 일정은 확정되지 않았습니다.",
+      "source": "https://m.pressian.com/m/pages/articles/2026081414463202789"
+    },
+    {
+      "name": "GTX-D 황산·교산 경유",
+      "status": "건의 단계",
+      "statusLevel": "proposed",
+      "desc": "하남시가 제5차 국가철도망 구축계획에 황산·교산 경유 반영을 건의하고 있습니다(2026년 8월 보도).",
+      "caution": "최종 반영 여부를 확인하지 못했습니다. 확정 호재로 안내하면 안 됩니다.",
+      "source": "https://m.pressian.com/m/pages/articles/2026081414463202789"
+    },
+    {
+      "name": "미사섬 K-한강 국가정원·K-컬처 복합개발",
+      "status": "제안 단계",
+      "statusLevel": "proposed",
+      "desc": "하남시가 미사섬 일대에 국가정원과 K-컬처 복합시설을 공동 추진하자고 경기도에 제안했습니다(2026년 7월).",
+      "caution": "개발제한구역 해제 등 절차가 남아 있습니다.",
+      "source": "https://www.ajunews.com/view/20260722160246574"
+    },
+    {
+      "name": "하남드림 광역복합환승센터",
+      "status": "공약",
+      "statusLevel": "proposed",
+      "desc": "2028년까지 조성한다는 목표가 2026년 지방선거 공약으로 제시되었습니다.",
+      "caution": "공약 기준 내용이며 사업 확정 여부는 확인이 필요합니다.",
+      "source": "https://www.hankyung.com/article/202605147039h"
+    }
+  ]
+}

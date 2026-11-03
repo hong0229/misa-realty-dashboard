@@ -1,0 +1,47 @@
+[
+  {
+    "id": "S1",
+    "complexId": "풍산동|480",
+    "dealType": "매매",
+    "title": "남향 중층, 5호선 생활권",
+    "floor": "중층",
+    "memo": "샘플 매물입니다. 실제 매물로 수정해 주세요.",
+    "isSample": true,
+    "area": 96.99,
+    "price": 163500
+  },
+  {
+    "id": "S2",
+    "complexId": "망월동|1125",
+    "dealType": "매매",
+    "title": "미사역 도보권 대형 평형",
+    "floor": "고층",
+    "memo": "샘플 매물입니다. 실제 매물로 수정해 주세요.",
+    "isSample": true,
+    "area": 102.86,
+    "price": 152000
+  },
+  {
+    "id": "S3",
+    "complexId": "선동|455",
+    "dealType": "전세",
+    "title": "입주 일정 협의 가능",
+    "floor": "중층",
+    "memo": "샘플 매물입니다. 실제 매물로 수정해 주세요.",
+    "isSample": true,
+    "area": 98.61,
+    "deposit": 72500
+  },
+  {
+    "id": "S4",
+    "complexId": "망월동|1060",
+    "dealType": "월세",
+    "title": "보증금 조정 가능",
+    "floor": "저층",
+    "memo": "샘플 매물입니다. 실제 매물로 수정해 주세요.",
+    "isSample": true,
+    "area": 84.99,
+    "deposit": 30000,
+    "rent": 180
+  }
+]

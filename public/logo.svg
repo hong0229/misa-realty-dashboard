@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 104" role="img" aria-label="KH 로고">
+  <defs>
+    <linearGradient id="gold" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#F6DE9A"/>
+      <stop offset=".5" stop-color="#D9AE52"/>
+      <stop offset="1" stop-color="#A97A25"/>
+    </linearGradient>
+  </defs>
+  <path fill="url(#gold)" d="M60 2 86 22V10h13v22.300L119 48a3.500 3.500 0 0 1-4.300 5.500L60 11.400 5.300 53.500A3.500 3.500 0 0 1 1 48z"/>
+  <path fill="url(#gold)" d="M56 34h8v5l-4-3-4 3z"/>
+  <g fill="url(#gold)">
+    <path d="M17 48h13v18.500L46 48h16L43.500 67.800 63 100H47L34.800 78.600 30 83.800V100H17z"/>
+    <path d="M66 48h13v20h16V48h13v52H95V80H79v20H66z"/>
+  </g>
+</svg>
