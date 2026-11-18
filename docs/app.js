@@ -311,7 +311,7 @@ function renderDetail(c, rows) {
   const box = $('#detail');
   box.hidden = false;
   box.innerHTML = `<div class="detail-head"><h3>${esc(c.name)} 최근 실거래</h3><span>하남시 ${esc(c.dong)} ${esc(c.jibun)}${c.build ? ` · ${c.build}년 준공` : ''} · 금액 단위 만원</span></div>
-    ${li ? `<div class="listing-note">${li.isSample ? '<span class="badge sample">샘플</span>' : ''}<b>추천 매물</b> ${esc(li.dealType)} ${listingPrice(li)} · ${+Number(li.area).toFixed(2)}㎡${li.floor ? ` · ${esc(li.floor)}` : ''}${li.memo ? `<br>${esc(li.memo)}` : ''}</div>` : ''}
+    ${li ? `<div class="listing-note">${li.isSample ? '<span class="badge sample">샘플</span>' : ''}<b>추천 매물</b>${li.building ? ` ${esc(li.building)}동` : ''} ${esc(li.dealType)} ${listingPrice(li)} · ${+Number(li.area).toFixed(2)}㎡${li.floor ? ` · ${esc(li.floor)}` : ''}${li.title || li.memo ? `<br>${esc(li.title || li.memo)}` : ''}</div>` : ''}
     <div class="tx-grid">${col('매매', rows.trade, (x) => won(x.price))}${col('전세', rows.jeonse, (x) => won(x.deposit))}${col('월세 (보증금/월세)', rows.wol, rentLabel)}</div>`;
 }
 
@@ -409,22 +409,51 @@ function listingPrice(l) {
   return `${won(l.deposit)} / ${l.rent}`;
 }
 
+const naverUrl = (l) => (/^\d+$/.test(String(l.naverId || '')) ? `https://fin.land.naver.com/articles/${l.naverId}` : '');
+const listingMeta = (l, c) => [
+  c ? c.dong : '',
+  l.building ? `${l.building}동` : '',
+  `${l.supply ? `${l.supply} · ` : ''}전용 ${+Number(l.area).toFixed(2)}㎡ (${pyArea(l.area)}평)`,
+  l.floor, l.direction,
+].filter(Boolean).map(esc).join(' · ');
+
+function renderListingFilter() {
+  const sel = $('#listingFilter');
+  const counts = new Map();
+  listings.forEach((l) => counts.set(l.complexId, (counts.get(l.complexId) || 0) + 1));
+  const keep = sel.value;
+  sel.innerHTML = `<option value="">전체 단지 (${listings.length})</option>` + [...counts].map(([id, n]) => {
+    const c = complexById.get(id);
+    return `<option value="${esc(id)}">${esc(c ? c.name : id)} (${n})</option>`;
+  }).join('');
+  sel.value = counts.has(keep) ? keep : '';
+  sel.hidden = counts.size < 2;
+}
+
 function renderListings() {
   const box = $('#listings');
+  renderListingFilter();
+  const filter = $('#listingFilter').value;
+  const shown = filter ? listings.filter((l) => l.complexId === filter) : listings;
+  const real = listings.filter((l) => !l.isSample);
+  const dates = real.map((l) => l.confirmed).filter(Boolean).sort();
+  $('#listingCount').textContent = real.length ? `${real.length}건${dates.length ? ` · 네이버 확인매물 ${dates.at(-1)} 기준` : ''}` : '';
   if (!listings.length) {
     box.innerHTML = '<div class="empty">등록된 매물이 없습니다. [+ 매물 추가]로 등록해 주세요.</div>';
     return;
   }
-  box.innerHTML = listings.map((l) => {
+  box.innerHTML = shown.map((l) => {
     const c = complexById.get(l.complexId);
+    const url = naverUrl(l);
     return `<article class="card ${state.listingId === l.id ? 'on' : ''}">
       <button class="card-open" data-open="${esc(l.id)}">
         <div class="card-type">${l.isSample ? '<span class="badge sample">샘플</span>' : ''}${esc(l.dealType)}</div>
         <div class="card-price">${listingPrice(l)}${l.dealType === '월세' ? '<small style="font-size:12px;font-weight:500"> 만원</small>' : ''}</div>
         <div class="card-apt">${esc(c ? c.name : '단지 정보 없음')}</div>
-        <div class="card-meta">${esc(c ? c.dong : '')} · 전용 ${+Number(l.area).toFixed(2)}㎡ (${pyArea(l.area)}평)${l.floor ? ` · ${esc(l.floor)}` : ''}</div>
+        <div class="card-meta">${listingMeta(l, c)}</div>
         <div class="card-title">${esc(l.title)}</div>
       </button>
+      ${url ? `<div class="card-source">${l.confirmed ? `확인매물 ${esc(l.confirmed)} · ` : ''}<a href="${url}" target="_blank" rel="noopener">네이버에서 보기</a></div>` : ''}
       <div class="card-actions no-print"><button data-edit="${esc(l.id)}">수정</button><button data-del="${esc(l.id)}">삭제</button></div>
     </article>`;
   }).join('');
@@ -850,6 +879,7 @@ function bindEvents() {
   $('#cancelListing').addEventListener('click', () => $('#listingDialog').close());
   $('#listingForm').addEventListener('submit', saveListing);
   $('#listingForm').dealType.addEventListener('change', syncDealFields);
+  $('#listingFilter').addEventListener('change', renderListings);
   $('#listings').addEventListener('click', async (e) => {
     const open = e.target.closest('[data-open]');
     if (open) {

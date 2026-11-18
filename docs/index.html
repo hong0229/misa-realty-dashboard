@@ -91,8 +91,11 @@
 
   <section class="panel listings-panel">
     <div class="panel-head">
-      <h2>추천 매물</h2>
-      <button class="primary no-print" id="addListing">+ 매물 추가</button>
+      <h2>추천 매물 <small id="listingCount"></small></h2>
+      <div class="listing-tools">
+        <select id="listingFilter" class="no-print" aria-label="단지별 보기"></select>
+        <button class="primary no-print" id="addListing">+ 매물 추가</button>
+      </div>
     </div>
     <div class="listings" id="listings"></div>
   </section>

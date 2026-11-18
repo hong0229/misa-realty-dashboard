@@ -33,7 +33,7 @@ function readBody(req) {
   });
 }
 
-const LISTING_FIELDS = ['complexId', 'title', 'dealType', 'price', 'deposit', 'rent', 'area', 'floor', 'memo', 'isSample'];
+const LISTING_FIELDS = ['complexId', 'title', 'dealType', 'price', 'deposit', 'rent', 'area', 'floor', 'memo', 'isSample', 'building', 'supply', 'direction', 'confirmed', 'naverId', 'source'];
 function cleanListing(body) {
   const out = {};
   for (const k of LISTING_FIELDS) if (body[k] !== undefined) out[k] = body[k];
