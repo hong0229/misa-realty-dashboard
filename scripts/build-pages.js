@@ -41,7 +41,7 @@ async function main() {
 
   const today = new Date().toISOString().slice(0, 10);
   const complexes = readJson('complexes.json');
-  writeData('meta', { dongs: MISA_DONGS, complexes, development: readJson('development.json') });
+  writeData('meta', { dongs: MISA_DONGS, complexes, development: readJson('development.json'), office: readJson('office.json') });
   writeData('listings', readJson('listings.json'));
   writeData('transactions', await getTransactions(FROM, today));
   writeData('market_week', await marketFor(true));

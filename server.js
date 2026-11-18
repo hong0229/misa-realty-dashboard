@@ -46,7 +46,7 @@ async function handleApi(req, res, url) {
   const p = url.pathname;
   if (p === '/api/meta') {
     const complexes = readJson(path.join(ROOT, 'data', 'complexes.json'), []);
-    return send(res, 200, { dongs: MISA_DONGS, complexes, development: readJson(path.join(ROOT, 'data', 'development.json'), {}) });
+    return send(res, 200, { dongs: MISA_DONGS, complexes, development: readJson(path.join(ROOT, 'data', 'development.json'), {}), office: readJson(path.join(ROOT, 'data', 'office.json'), {}) });
   }
   if (p === '/api/transactions') {
     const from = url.searchParams.get('from');

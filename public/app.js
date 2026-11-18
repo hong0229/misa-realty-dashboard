@@ -905,6 +905,14 @@ function bindEvents() {
   });
 }
 
+// 중개사무소 표시 사항(대표자, 등록번호). 등록번호가 비어 있으면 표시하지 않는다
+function renderOffice(o) {
+  const parts = [o.ceo && `대표 공인중개사 ${o.ceo}`, o.regNo && `등록번호 ${o.regNo}`].filter(Boolean);
+  $('#brandOffice').textContent = parts.join(' · ');
+  if (o.name) $('#footOfficeName').textContent = o.name;
+  $('#footOffice').textContent = [o.address, ...parts].filter(Boolean).join(' · ');
+}
+
 async function init() {
   initMap();
   bindEvents();
@@ -923,6 +931,7 @@ async function init() {
     return;
   }
   complexById = new Map(meta.complexes.map((c) => [c.id, c]));
+  renderOffice(meta.office || {});
   $('#dongSeg').innerHTML = ['전체', ...meta.dongs].map((d) => `<button data-v="${d}" class="${d === state.dong ? 'on' : ''}">${d === '전체' ? '미사지구 전체' : d}</button>`).join('');
   const sel = $('#listingForm').complexId;
   sel.innerHTML = [...meta.complexes].filter((c) => c.lat).sort((a, b) => a.name.localeCompare(b.name, 'ko')).map((c) => `<option value="${esc(c.id)}">${esc(c.name)} (${esc(c.dong)})</option>`).join('');

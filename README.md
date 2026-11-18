@@ -50,6 +50,7 @@
 | API 키 | `.env` (브라우저에 노출되지 않습니다. 외부에 공유하지 마세요) |
 | 추천 매물 | 화면의 `+ 매물 추가`, 수정, 삭제 버튼 (`data/listings.json`에 저장) |
 | 주변 개발계획 | `data/development.json` (기준일과 출처를 함께 수정) |
+| 사무소 정보 (상호·대표자·등록번호·주소) | `data/office.json` |
 | 로고 | `public/logo.svg` |
 | 집계 제외 단지 | `lib/sources.js`의 `EXCLUDED_NAME` |
 
