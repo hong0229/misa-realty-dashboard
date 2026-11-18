@@ -55,7 +55,11 @@ async function main() {
 
   const indexFile = path.join(OUT, 'index.html');
   const html = fs.readFileSync(indexFile, 'utf8').replace('<head>', '<head>\n<script>window.STATIC_SITE = true; document.documentElement.classList.add(\'static-site\');</script>');
-  fs.writeFileSync(indexFile, html);
+  // 파일 주소에 버전을 붙여 GitHub Pages 캐시(10분) 때문에 예전 화면이 보이지 않게 한다
+  const ver = Date.now().toString(36);
+  const versioned = html
+    .replace(/(src|href)="((?:app|outlook|report)\.js|style\.css)"/g, (m, attr, file) => `${attr}="${file}?v=${ver}"`);
+  fs.writeFileSync(indexFile, versioned);
 
   const leaked = [process.env.DATA_GO_KR_KEY, process.env.REB_KEY].filter(Boolean);
   for (const name of fs.readdirSync(DATA).concat(['index.html'])) {
