@@ -185,6 +185,27 @@ main { max-width: 1480px; margin: 0 auto; padding: 18px 24px 30px; }
 .card-actions button { border: 0; background: none; color: var(--ink-3); font-size: 12.5px; padding: 2px 6px; }
 .card-actions button:hover { color: var(--ink); text-decoration: underline; }
 
+/* 단지별 실거래가 · 시세 */
+.price-panel { margin-top: 14px; }
+.price-controls { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
+.price-controls select, .price-sub select { border: 1px solid var(--line); border-radius: 8px; padding: 6px 9px; background: #fff; max-width: 260px; }
+.price-sub { display: flex; flex-wrap: wrap; gap: 8px 14px; align-items: center; margin-bottom: 10px; }
+.price-stats { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 8px; margin-bottom: 12px; }
+.price-stat { background: #f6f8fb; border-radius: 10px; padding: 9px 12px; min-width: 0; }
+.price-stat span { display: block; font-size: 12.5px; color: var(--ink-3); }
+.price-stat b { display: block; font-size: 19px; font-weight: 800; letter-spacing: -.02em; font-variant-numeric: tabular-nums; }
+.price-stat small { display: block; font-size: 12px; color: var(--ink-3); }
+.price-body { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 6fr); gap: 14px; align-items: start; }
+.tx-scroll { max-height: 330px; overflow: auto; border: 1px solid var(--line); border-radius: 10px; }
+.quote-scroll { max-height: 560px; overflow: auto; border: 1px solid var(--line); border-radius: 10px; }
+.price-table { width: 100%; border-collapse: collapse; font-size: 13.5px; font-variant-numeric: tabular-nums; white-space: nowrap; }
+.price-table th { position: sticky; top: 0; z-index: 1; background: #f4f6fa; font-size: 12.5px; font-weight: 600; color: var(--ink-2); padding: 7px 10px; text-align: right; border-bottom: 1px solid var(--line); }
+.price-table td { padding: 6px 10px; text-align: right; border-bottom: 1px solid var(--line); vertical-align: top; }
+.price-table th:first-child, .price-table td:first-child { text-align: left; }
+.price-table td small { display: block; font-size: 11.5px; color: var(--ink-3); }
+.price-table td.name button { border: 0; background: none; padding: 0; font-weight: 700; color: var(--navy); text-decoration: underline; text-underline-offset: 3px; text-align: left; }
+.price-table td.empty { text-align: center; color: var(--ink-3); padding: 24px; white-space: normal; }
+
 /* 차트 */
 .section-title { font-size: 18px; font-weight: 800; margin: 20px 0 10px; }
 .charts { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px; }
@@ -278,8 +299,11 @@ dialog::backdrop { background: rgba(8, 20, 40, .5); }
 @media (max-width: 900px) {
   .top-grid { grid-template-columns: minmax(0, 1fr); }
   .tx-grid { grid-template-columns: minmax(0, 1fr); }
+  .price-body { grid-template-columns: minmax(0, 1fr); }
+  .price-stats { grid-template-columns: repeat(3, minmax(0, 1fr)); }
 }
 @media (max-width: 640px) {
+  .price-stats { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .brand-in, .filters-in, main, .footer-in { padding-left: 16px; padding-right: 16px; }
   .brand-in { flex-wrap: wrap; gap: 8px 12px; }
   .logo { width: 48px; height: auto; }
@@ -322,7 +346,8 @@ dialog::backdrop { background: rgba(8, 20, 40, .5); }
   .location, .listings-panel { break-before: auto; }
   .chart-box { height: auto !important; }
   canvas { width: 100% !important; height: auto !important; }
-  .table-scroll { overflow: visible; }
+  .table-scroll, .tx-scroll, .quote-scroll { overflow: visible; max-height: none; }
+  .price-table th { position: static; }
   .dong-table { break-inside: avoid; }
   a { color: inherit; }
 }

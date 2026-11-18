@@ -103,6 +103,34 @@
     <div class="listings" id="listings"></div>
   </section>
 
+  <section class="panel price-panel" id="txSection">
+    <div class="panel-head">
+      <h2 id="txTitle">단지별 실거래가</h2>
+      <div class="price-controls">
+        <select id="txComplex" aria-label="단지 선택"></select>
+        <div class="tabs" id="txDeal" role="tablist"></div>
+      </div>
+    </div>
+    <div class="price-sub">
+      <div class="chips" id="txMonths"></div>
+      <select id="txArea" aria-label="평형 선택"></select>
+    </div>
+    <div class="price-stats" id="txStats"></div>
+    <div class="price-body">
+      <div class="chart flat"><h3>거래 가격 추이</h3><div class="chart-sub">점 하나가 신고된 거래 1건입니다</div><div class="chart-box tall" id="box-txScatter"></div></div>
+      <div class="table-scroll tx-scroll"><table class="price-table" id="txTable"></table></div>
+    </div>
+  </section>
+
+  <section class="panel price-panel" id="quoteSection">
+    <div class="panel-head">
+      <h2>최근 시세 현황 <small id="quoteNote"></small></h2>
+      <div class="chips" id="quoteMonths"></div>
+    </div>
+    <div class="table-scroll quote-scroll"><table class="price-table quote-table" id="quoteTable"></table></div>
+    <p class="foot">시세는 국토부 실거래 신고가의 평균(월세는 중위값)으로 계산했으며 매물 호가와 다를 수 있습니다. 최근 거래는 신고기한(30일) 때문에 늦게 반영될 수 있습니다. 단지 이름을 누르면 단지별 실거래가로 이동합니다.</p>
+  </section>
+
   <section class="market">
     <h2 class="section-title">시장 지표</h2>
     <div class="yoy-cards" id="yoyCards"></div>
@@ -182,6 +210,7 @@
 <script src="vendor/html2canvas.min.js"></script>
 <script src="vendor/jspdf.umd.min.js"></script>
 <script src="outlook.js"></script>
+<script src="prices.js"></script>
 <script src="report.js"></script>
 <script src="app.js"></script>
 </body>

@@ -24,6 +24,8 @@ function pdfTargets() {
     document.querySelector('.top-grid'),
     $('#location'),
     document.querySelector('.listings-panel'),
+    $('#txSection'),
+    $('#quoteSection'),
     ...document.querySelector('.market').children,
     document.querySelector('.footer'),
   ];
@@ -53,6 +55,8 @@ async function capture(el) {
     backgroundColor: '#ffffff',
     windowWidth: Math.max(PDF_WIDTH, window.innerWidth),
     logging: false,
+    // 스크롤 상자 안의 표도 전체가 찍히도록 높이 제한을 푼다
+    onclone: (doc) => doc.querySelectorAll('.tx-scroll, .quote-scroll').forEach((el) => { el.style.maxHeight = 'none'; el.style.overflow = 'visible'; }),
     ignoreElements: (node) => node.classList && (node.classList.contains('no-print') || node.classList.contains('leaflet-control-zoom')),
   });
 }

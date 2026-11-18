@@ -132,6 +132,7 @@ function renderData() {
   renderKpis();
   renderRank();
   renderCharts();
+  if (history.trade.length) renderQuotes();
 }
 
 // ---- 핵심 지표 ----
@@ -318,6 +319,7 @@ function renderDetail(c, rows) {
 async function selectComplex(id, listingId = null) {
   const c = complexById.get(id);
   state.selectedId = id;
+  syncPriceComplex(id);
   state.listingId = listingId;
   document.querySelectorAll('#rankList li').forEach((li) => li.classList.toggle('on', li.firstElementChild?.dataset.id === id));
   renderListings();
@@ -916,6 +918,7 @@ function renderOffice(o) {
 async function init() {
   initMap();
   bindEvents();
+  bindPriceEvents();
   if (window.STATIC_SITE) {
     const site = await staticFile('site');
     $('#from').min = site.from;
@@ -940,6 +943,7 @@ async function init() {
   const end = today();
   const [hist] = await Promise.all([api(`/api/transactions?from=${addMonths(end, -24)}&to=${end}`).catch(() => null), loadAll()]);
   if (hist) history = hist;
+  renderPrices();
 }
 
 init();
