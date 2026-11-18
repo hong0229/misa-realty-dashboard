@@ -4,6 +4,8 @@
 
 **공개 웹사이트:** https://hong0229.github.io/misa-realty-dashboard/
 
+**Windows 실행 파일:** [최신 버전 내려받기](https://github.com/hong0229/misa-realty-dashboard/releases/latest/download/misa-dashboard.exe) ([릴리스 목록](https://github.com/hong0229/misa-realty-dashboard/releases)). 내려받은 파일을 더블클릭하면 열립니다. API 키가 들어 있지 않아, 키가 없으면 릴리스 기준일의 고정 자료로 열립니다.
+
 ## 웹사이트 갱신
 
 공개 사이트는 서버 없이 `docs/` 폴더의 파일로 동작합니다. API 키는 브라우저나 저장소에 올라가지 않습니다.
