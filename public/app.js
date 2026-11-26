@@ -432,8 +432,24 @@ function renderListingFilter() {
   sel.hidden = counts.size < 2;
 }
 
+// 공개 사이트에서는 저장해 둔 매물 대신 네이버부동산 실시간 매물로 바로 연결한다 (항상 네이버와 같게 보이도록)
+const NAVER_REALTOR_URL = 'https://fin.land.naver.com/realtor/hjnongam0229';
+function renderNaverLive(box) {
+  $('#listingCount').textContent = '네이버부동산 실시간';
+  $('#listingFilter').hidden = true;
+  box.innerHTML = `<a class="naver-live" href="${NAVER_REALTOR_URL}" target="_blank" rel="noopener">
+      <span class="naver-mark" aria-hidden="true">N</span>
+      <span class="naver-text">
+        <b>지금 광고 중인 매물은 네이버부동산에서 실시간으로 확인하세요</b>
+        <small>매매·전세·월세 매물의 사진, 가격, 동·층, 상세 조건이 네이버부동산과 똑같이 보입니다. 거래 가능 여부는 031-795-1149로 확인해 주세요.</small>
+      </span>
+      <span class="naver-go">네이버부동산 매물 보기 ↗</span>
+    </a>`;
+}
+
 function renderListings() {
   const box = $('#listings');
+  if (window.STATIC_SITE) return renderNaverLive(box);
   renderListingFilter();
   const filter = $('#listingFilter').value;
   const shown = filter ? listings.filter((l) => l.complexId === filter) : listings;

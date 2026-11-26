@@ -19,7 +19,7 @@
 
 실행 파일(`.exe`)은 저장소에 포함하지 않습니다. 필요하면 `scripts/build-exe.js` 안내대로 만들 수 있습니다.
 
-단지 좌표와 주변시설 자료는 [OpenStreetMap](https://www.openstreetmap.org/copyright) 기반(ODbL)입니다. 추천 매물은 센트럴자이 미사금호공인중개사사무소가 네이버 부동산에 광고한 미사강변도시 아파트 매물(2026-11-18 확인 기준)입니다. 거래 완료 여부는 사무소에 문의해야 합니다.
+단지 좌표와 주변시설 자료는 [OpenStreetMap](https://www.openstreetmap.org/copyright) 기반(ODbL)입니다. 공개 사이트의 추천 매물 칸은 네이버부동산 중개사무소 페이지(실시간)로 바로 연결합니다. 이 PC 화면에서는 `data/listings.json`에 저장한 매물 카드가 그대로 보입니다. 거래 완료 여부는 사무소에 문의해야 합니다.
 
 ## 실행
 
